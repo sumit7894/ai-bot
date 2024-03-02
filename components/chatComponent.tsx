@@ -8,47 +8,70 @@ export default function ChatComponent() {
     console.log(input);
 
     return (
-        <div>
-            {messages.map((message : Message) => {
-                return (
-                    <div key={message.id}>
-                        {/*  Name of person talking */}
-                        {
-                            message.role === "assistant"
-                            ?
-                            <h3 className="text-lg font-semibold mt-2">
-                                GPT-4
-                            </h3>
-                            :
-                            <h3 className="text-lg font-semibold mt-2">
-                                User
-                            </h3>
-                        }
-                        
-                        {/* Formatting the message */}
-                        {message.content.split("\n").map((currentTextBlock: string, index : number) => {
-                            if(currentTextBlock === "") {
-                                return <p key={message.id + index}>&nbsp;</p> // " "
-                            } else {
-                                return <p key={message.id + index}>{currentTextBlock}</p> 
-                            }
-                        })}
-                    </div>
-                )
-            })}
+<div className="chat-box flex flex-col h-screen overflow-y-auto bg-gray-100 dark:bg-gray-800 px-4 py-8 rounded-md shadow-md">
+      {/* Message history */}
+      <div className="message-history flex flex-col gap-4 overflow-y-auto">
+        {messages.map((message: Message) => (
+          <div
+            key={message.id}
+            className={`message flex items-center justify-${
+              message.role === "assistant" ? "end" : "start"
+            }`}
+          >
+            {message.role === "assistant" && (
+              <div className="assistant-avatar rounded-full bg-blue-500 p-2">
+                <svg
+                  className="text-white w-6 h-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  {/* Replace with your preferred assistant icon */}
+                  <path
+                    d="M9 5H7C4.8 5 3 6.8 3 9v12c0 2.2 1.8 4 4 4h2a2 2 0 0 0 2-2V9zM15 5h-2C12.2 5 11 6.8 11 9v12c0 2.2 1.8 4 4 4h2a2 2 0 0 0 2-2V9z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M12 17c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM12 11c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+            )}
+            <div className="message-content flex flex-col ml-2">
+              {message.role === "assistant" ? (
+                <h3 className="assistant-name text-lg font-semibold text-blue-700">
+                  Travel Thousand Miles
+                </h3>
+              ) : (
+                <h3 className="user-name text-lg font-semibold text-gray-700 dark:text-gray-200">
+                  User
+                </h3>
+              )}
+              <div className="message-text text-gray-600 dark:text-gray-200 text-base">
+                {message.content}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
-            <form className="mt-12" onSubmit={handleSubmit}>
-                <p>User Message</p>
-                <textarea
-                    className="mt-2 w-full bg-slate-600 p-2"
-                    placeholder={"What are data structures and algorithims?"}
-                    value={input}
-                    onChange={handleInputChange}
-                />
-                <button className="rounded-md bg-blue-600 p-2 mt-2">
-                    Send message
-                </button>
-            </form>
-        </div>
+      {/* User input form */}
+      <form className="mt-8 flex items-center justify-between w-full" onSubmit={handleSubmit}>
+        <textarea
+          className="chat-input flex-grow bg-gray-100 dark:bg-gray-800 border border-transparent rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 resize-none"
+          placeholder="Ask your question..."
+          value={input}
+          onChange={handleInputChange}
+        />
+        <button
+          type="submit"
+          className="rounded-md bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 disabled:opacity-50"
+          disabled={!input.trim()} 
+        >
+          Send
+        </button>
+      </form>
+    </div>
     )
 }
