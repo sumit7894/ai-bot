@@ -29,10 +29,13 @@ export async function POST(request: Request) {
     
     Destinations: Goa, Kerala, Madhya Pradesh, Uttarakhand, Rajasthan, Kashmir, Himachal, Sikkim, Karnataka, Odisha, West Bengal, Gujarat, Maharashtra.
     
-    For each destination, use the link format: https://travelthousandmiles.com/trip-types/{destination}-tour-packages/.
+    For each destination, use the link format: https://travelthousandmiles.com/trip-types/{destination}-tour-packages/. I'm rendering the responsie inside
+    a dive generate a link such that it is clickable
     
-    Additionally, the company offers themed tour packages.`;
+    Additionally, the company offers themed tour packages.
     
+    `;
+
     const response = await openai.createChatCompletion({
         model: 'gpt-3.5-turbo',
         stream: true,

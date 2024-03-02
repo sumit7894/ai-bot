@@ -10,7 +10,7 @@ export default function ChatComponent() {
     return (
 <div className="chat-box flex flex-col h-screen overflow-y-auto bg-gray-100 dark:bg-gray-800 px-4 py-8 rounded-md shadow-md">
       
-    <h3 className="assistant-name text-lg font-semibold text-blue-700 flex ">
+    <h3 className="assistant-name text-lg font-semibold text-blue-700 flex justify-center ">
         Travel Thousand Miles AI Bot
     </h3>
       <div className="message-history flex flex-col gap-4 overflow-y-auto">
